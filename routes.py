@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, session
 from werkzeug.utils import secure_filename
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 import os
 
 from extensions import db
@@ -184,6 +184,48 @@ def admin_login():
         )
 
     return render_template("admin/login.html")
+@main.route("/admin/setup", methods=["GET", "POST"])
+def admin_setup():
+
+    setup_key = os.environ.get("ADMIN_SETUP_KEY")
+
+    if not setup_key:
+        return "Setup disabled", 404
+
+    if request.args.get("key") != setup_key:
+        return "Unauthorized", 403
+
+    if request.method == "POST":
+
+        password = request.form.get("password")
+
+        if not password:
+            return "Password required", 400
+
+        existing = Admin.query.filter_by(
+            username="Florence"
+        ).first()
+
+        if existing:
+            return "Florence already exists"
+
+        admin = Admin(
+            username="Florence",
+            password=generate_password_hash(password)
+        )
+
+        db.session.add(admin)
+        db.session.commit()
+
+        return "Admin created successfully. Remove this setup route now."
+
+    return """
+    <form method="POST">
+        <label>Choose admin password:</label>
+        <input type="password" name="password" required>
+        <button type="submit">Create Florence Admin</button>
+    </form>
+    """
 
 # ==================================================
 # ADMIN LOGOUT
