@@ -1,0 +1,576 @@
+{% extends "admin/layout.html" %}
+
+{% block content %}
+
+<div class="admin-page-header">
+    <div>
+        <h1>Website Settings</h1>
+        <p>Manage your business information, homepage content and branding.</p>
+    </div>
+</div>
+
+
+<form
+    method="POST"
+    action="{{ url_for('main.admin_settings') }}"
+    class="settings-form"
+>
+
+
+    <!-- ==========================
+         BUSINESS INFORMATION
+    =========================== -->
+
+    <div class="settings-card">
+
+        <div class="settings-card-header">
+            <div>
+                <h2>Business Information</h2>
+                <p>Basic information about your business.</p>
+            </div>
+        </div>
+
+
+        <div class="settings-grid">
+
+            <div class="form-group">
+
+                <label for="business_name">
+                    Business Name
+                </label>
+
+                <input
+                    type="text"
+                    id="business_name"
+                    name="business_name"
+                    value="{{ settings.business_name or '' }}"
+                    placeholder="Chidinma Standard Ventures"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="slogan">
+                    Slogan
+                </label>
+
+                <input
+                    type="text"
+                    id="slogan"
+                    name="slogan"
+                    value="{{ settings.slogan or '' }}"
+                    placeholder="Quality products, trusted service."
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="description">
+                Business Description
+            </label>
+
+            <textarea
+                id="description"
+                name="description"
+                rows="5"
+                placeholder="Tell customers about your business..."
+            >{{ settings.description or '' }}</textarea>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================
+         CONTACT INFORMATION
+    =========================== -->
+
+    <div class="settings-card">
+
+        <div class="settings-card-header">
+            <div>
+                <h2>Contact Information</h2>
+                <p>How customers can reach your business.</p>
+            </div>
+        </div>
+
+
+        <div class="settings-grid">
+
+            <div class="form-group">
+
+                <label for="whatsapp">
+                    WhatsApp
+                </label>
+
+                <input
+                    type="text"
+                    id="whatsapp"
+                    name="whatsapp"
+                    value="{{ settings.whatsapp or '' }}"
+                    placeholder="08012345678"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="customer_care">
+                    Customer Care
+                </label>
+
+                <input
+                    type="text"
+                    id="customer_care"
+                    name="customer_care"
+                    value="{{ settings.customer_care or '' }}"
+                    placeholder="08012345678"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value="{{ settings.email or '' }}"
+                    placeholder="info@example.com"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="business_hours">
+                    Business Hours
+                </label>
+
+                <input
+                    type="text"
+                    id="business_hours"
+                    name="business_hours"
+                    value="{{ settings.business_hours or '' }}"
+                    placeholder="Mon - Sat: 8AM - 6PM"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="address">
+                Business Address
+            </label>
+
+            <input
+                type="text"
+                id="address"
+                name="address"
+                value="{{ settings.address or '' }}"
+                placeholder="Enter your business address"
+            >
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================
+         HOMEPAGE
+    =========================== -->
+
+    <div class="settings-card">
+
+        <div class="settings-card-header">
+            <div>
+                <h2>Homepage</h2>
+                <p>Control the main message visitors see.</p>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="hero_title">
+                Hero Title
+            </label>
+
+            <input
+                type="text"
+                id="hero_title"
+                name="hero_title"
+                value="{{ settings.hero_title or '' }}"
+                placeholder="Welcome to Chidinma Standard Ventures"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="hero_subtitle">
+                Hero Subtitle
+            </label>
+
+            <textarea
+                id="hero_subtitle"
+                name="hero_subtitle"
+                rows="4"
+                placeholder="Write a short message for your customers..."
+            >{{ settings.hero_subtitle or '' }}</textarea>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================
+         BRANDING
+    =========================== -->
+
+    <div class="settings-card">
+
+        <div class="settings-card-header">
+            <div>
+                <h2>Branding</h2>
+                <p>Choose the main colours for your website.</p>
+            </div>
+        </div>
+
+
+        <div class="settings-grid">
+
+            <div class="form-group">
+
+                <label for="primary_color">
+                    Primary Colour
+                </label>
+
+                <div class="color-input">
+
+                    <input
+                        type="color"
+                        id="primary_color"
+                        name="primary_color"
+                        value="{{ settings.primary_color or '#0B6E4F' }}"
+                    >
+
+                    <span>
+                        {{ settings.primary_color or '#0B6E4F' }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="secondary_color">
+                    Secondary Colour
+                </label>
+
+                <div class="color-input">
+
+                    <input
+                        type="color"
+                        id="secondary_color"
+                        name="secondary_color"
+                        value="{{ settings.secondary_color or '#D4AF37' }}"
+                    >
+
+                    <span>
+                        {{ settings.secondary_color or '#D4AF37' }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================
+         STATISTICS
+    =========================== -->
+
+    <div class="settings-card">
+
+        <div class="settings-card-header">
+            <div>
+                <h2>Homepage Statistics</h2>
+                <p>Numbers displayed on your homepage.</p>
+            </div>
+        </div>
+
+
+        <div class="settings-grid">
+
+            <div class="stat-setting">
+
+                <h3>Statistic 1</h3>
+
+                <input
+                    type="text"
+                    name="stat1_number"
+                    value="{{ settings.stat1_number or '' }}"
+                    placeholder="500+"
+                >
+
+                <input
+                    type="text"
+                    name="stat1_label"
+                    value="{{ settings.stat1_label or '' }}"
+                    placeholder="Happy Customers"
+                >
+
+            </div>
+
+
+            <div class="stat-setting">
+
+                <h3>Statistic 2</h3>
+
+                <input
+                    type="text"
+                    name="stat2_number"
+                    value="{{ settings.stat2_number or '' }}"
+                    placeholder="1000+"
+                >
+
+                <input
+                    type="text"
+                    name="stat2_label"
+                    value="{{ settings.stat2_label or '' }}"
+                    placeholder="Products Sold"
+                >
+
+            </div>
+
+
+            <div class="stat-setting">
+
+                <h3>Statistic 3</h3>
+
+                <input
+                    type="text"
+                    name="stat3_number"
+                    value="{{ settings.stat3_number or '' }}"
+                    placeholder="5+"
+                >
+
+                <input
+                    type="text"
+                    name="stat3_label"
+                    value="{{ settings.stat3_label or '' }}"
+                    placeholder="Years Experience"
+                >
+
+            </div>
+
+
+            <div class="stat-setting">
+
+                <h3>Statistic 4</h3>
+
+                <input
+                    type="text"
+                    name="stat4_number"
+                    value="{{ settings.stat4_number or '' }}"
+                    placeholder="24/7"
+                >
+
+                <input
+                    type="text"
+                    name="stat4_label"
+                    value="{{ settings.stat4_label or '' }}"
+                    placeholder="Customer Support"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================
+         PROMOTION
+    =========================== -->
+
+    <div class="settings-card">
+
+        <div class="settings-card-header">
+            <div>
+                <h2>Promotional Banner</h2>
+                <p>Display a special announcement on your website.</p>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="promo_text">
+                Promotion Text
+            </label>
+
+            <input
+                type="text"
+                id="promo_text"
+                name="promo_text"
+                value="{{ settings.promo_text or '' }}"
+                placeholder="Special offer available now!"
+            >
+
+        </div>
+
+
+        <label class="toggle-setting">
+
+            <input
+                type="checkbox"
+                name="promo_enabled"
+                {% if settings.promo_enabled %}checked{% endif %}
+            >
+
+            <span class="toggle-switch"></span>
+
+            <span>
+                Enable promotional banner
+            </span>
+
+        </label>
+
+    </div>
+
+
+
+    <!-- ==========================
+         SOCIAL MEDIA
+    =========================== -->
+
+    <div class="settings-card">
+
+        <div class="settings-card-header">
+            <div>
+                <h2>Social Media</h2>
+                <p>Add your business social media pages.</p>
+            </div>
+        </div>
+
+
+        <div class="settings-grid">
+
+            <div class="form-group">
+
+                <label for="facebook">
+                    Facebook
+                </label>
+
+                <input
+                    type="url"
+                    id="facebook"
+                    name="facebook"
+                    value="{{ settings.facebook or '' }}"
+                    placeholder="https://facebook.com/..."
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="instagram">
+                    Instagram
+                </label>
+
+                <input
+                    type="url"
+                    id="instagram"
+                    name="instagram"
+                    value="{{ settings.instagram or '' }}"
+                    placeholder="https://instagram.com/..."
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="tiktok">
+                    TikTok
+                </label>
+
+                <input
+                    type="url"
+                    id="tiktok"
+                    name="tiktok"
+                    value="{{ settings.tiktok or '' }}"
+                    placeholder="https://tiktok.com/@..."
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="linkedin">
+                    LinkedIn
+                </label>
+
+                <input
+                    type="url"
+                    id="linkedin"
+                    name="linkedin"
+                    value="{{ settings.linkedin or '' }}"
+                    placeholder="https://linkedin.com/..."
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- SAVE BUTTON -->
+
+    <div class="settings-save-bar">
+
+        <button
+            type="submit"
+            class="admin-btn settings-save-btn"
+        >
+            Save Changes
+        </button>
+
+    </div>
+
+</form>
+
+{% endblock %}

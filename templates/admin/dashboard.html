@@ -1,0 +1,191 @@
+{% extends "admin/layout.html" %}
+
+{% block page_title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-page">
+
+    <div class="page-header">
+
+        <div>
+            <h1>Dashboard</h1>
+
+            <p>
+                Welcome back, {{ session.get("admin_username") }}.
+                Here's an overview of your business.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- MAIN STAT CARDS -->
+
+    <div class="cards">
+
+        <div class="card">
+            <h2>Products</h2>
+            <h1>{{ product_count }}</h1>
+
+            <a href="/admin/products">
+                Manage Products →
+            </a>
+        </div>
+
+
+        <div class="card">
+            <h2>Gallery</h2>
+            <h1>{{ gallery_count }}</h1>
+
+            <a href="/admin/gallery">
+                Manage Gallery →
+            </a>
+        </div>
+
+
+        <div class="card">
+            <h2>Testimonials</h2>
+            <h1>{{ testimonial_count }}</h1>
+
+            <a href="/admin/testimonials">
+                Manage Testimonials →
+            </a>
+        </div>
+
+
+        <div class="card">
+            <h2>Quote Requests</h2>
+            <h1>{{ quote_count }}</h1>
+
+            <a href="/admin/quotes">
+                View Requests →
+            </a>
+        </div>
+
+    </div>
+
+
+    <!-- QUOTE OVERVIEW -->
+
+    <div class="dashboard-section">
+
+        <div class="section-header">
+
+            <div>
+                <h2>Quote Request Overview</h2>
+
+                <p>
+                    Track the status of your wholesale enquiries.
+                </p>
+            </div>
+
+            <a href="/admin/quotes" class="admin-btn">
+                View All Requests
+            </a>
+
+        </div>
+
+
+        <div class="quote-stats">
+
+            <div class="quote-stat">
+                <div class="quote-stat-icon">🟡</div>
+
+                <div>
+                    <h3>{{ pending_quotes }}</h3>
+                    <p>Pending</p>
+                </div>
+            </div>
+
+
+            <div class="quote-stat">
+                <div class="quote-stat-icon">🔵</div>
+
+                <div>
+                    <h3>{{ contacted_quotes }}</h3>
+                    <p>Contacted</p>
+                </div>
+            </div>
+
+
+            <div class="quote-stat">
+                <div class="quote-stat-icon">🟢</div>
+
+                <div>
+                    <h3>{{ completed_quotes }}</h3>
+                    <p>Completed</p>
+                </div>
+            </div>
+
+
+            <div class="quote-stat">
+                <div class="quote-stat-icon">🔴</div>
+
+                <div>
+                    <h3>{{ cancelled_quotes }}</h3>
+                    <p>Cancelled</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <div class="dashboard-section">
+
+        <div class="section-header">
+
+            <div>
+                <h2>Quick Actions</h2>
+
+                <p>
+                    Quickly manage your website.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="quick-actions">
+
+            <a href="/admin/products" class="quick-action">
+                📦
+                <span>Manage Products</span>
+            </a>
+
+
+            <a href="/admin/gallery" class="quick-action">
+                🖼️
+                <span>Manage Gallery</span>
+            </a>
+
+
+            <a href="/admin/testimonials" class="quick-action">
+                ⭐
+                <span>Testimonials</span>
+            </a>
+
+
+            <a href="/admin/quotes" class="quick-action">
+                📋
+                <span>Quote Requests</span>
+            </a>
+
+
+            <a href="/admin/settings" class="quick-action">
+                ⚙️
+                <span>Website Settings</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

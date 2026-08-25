@@ -1,0 +1,117 @@
+{% extends "admin/layout.html" %}
+
+{% block content %}
+
+<div class="admin-page">
+
+    <div class="admin-page-header">
+        <div>
+            <h1>Testimonials</h1>
+            <p>Manage customer testimonials submitted on your website.</p>
+        </div>
+    </div>
+
+
+    {% if testimonials %}
+
+        <div class="testimonial-admin-grid">
+
+            {% for testimonial in testimonials %}
+
+                <div class="testimonial-admin-card">
+
+                    <div class="testimonial-admin-top">
+
+                        <div>
+                            <h3>{{ testimonial.customer_name }}</h3>
+
+                            <div class="testimonial-rating">
+                                {% for i in range(testimonial.rating or 5) %}
+                                    ★
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        {% if testimonial.approved %}
+
+                            <span class="status approved">
+                                Approved
+                            </span>
+
+                        {% else %}
+
+                            <span class="status pending">
+                                Pending
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <p class="testimonial-admin-message">
+                        "{{ testimonial.message }}"
+                    </p>
+
+
+                    <div class="testimonial-admin-actions">
+
+                        {% if not testimonial.approved %}
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('main.approve_testimonial', testimonial_id=testimonial.id) }}"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="btn-approve"
+                                >
+                                    ✓ Approve
+                                </button>
+
+                            </form>
+
+                        {% endif %}
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('main.delete_testimonial', testimonial_id=testimonial.id) }}"
+                            onsubmit="return confirm('Delete this testimonial?');"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn-delete"
+                            >
+                                Delete
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <h3>No Testimonials Yet</h3>
+
+            <p>
+                Customer testimonials will appear here when they are submitted.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

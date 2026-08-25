@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ site_settings.business_name or "Chidinma Standard Ventures" }}
+    </title>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================
+     TOP BAR
+=========================== -->
+
+<div class="top-bar">
+
+    {% if site_settings.promo_enabled and site_settings.promo_text %}
+
+        {{ site_settings.promo_text }}
+
+    {% else %}
+
+        🚚 Fast Delivery Available |
+        Wholesale Prices |
+        Open Daily: 8:00 AM – 8:00 PM
+
+    {% endif %}
+
+</div>
+
+
+
+<!-- ==========================
+     NAVIGATION
+=========================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <h2>
+            {{ site_settings.business_name or "CHIDINMA STANDARD VENTURES" }}
+        </h2>
+
+        {% if site_settings.slogan %}
+            <span>{{ site_settings.slogan }}</span>
+        {% else %}
+            <span>STANDARD VENTURES</span>
+        {% endif %}
+
+    </div>
+
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="/">Home</a>
+        </li>
+
+        <li>
+            <a href="/about">About</a>
+        </li>
+
+        <li>
+            <a href="/products">Products</a>
+        </li>
+
+        <li>
+            <a href="/gallery">Gallery</a>
+        </li>
+
+        <li>
+            <a href="/testimonials">Testimonials</a>
+        </li>
+
+        <li>
+            <a href="/contact">Contact</a>
+        </li>
+
+    </ul>
+
+
+    <a
+    href="https://wa.me/{{ site_settings.whatsapp|replace('+', '')|replace(' ', '') if site_settings.whatsapp else '2348037474407' }}"
+    class="nav-btn"
+    target="_blank"
+>
+    Order Now
+</a>
+
+</nav>
+
+
+<!-- ==========================
+     PAGE CONTENT
+=========================== -->
+
+{% block content %}
+
+{% endblock %}
+
+
+<!-- ==========================
+     FLOATING WHATSAPP
+=========================== -->
+
+<a
+    class="whatsapp-btn"
+    href="https://wa.me/{{ site_settings.whatsapp|replace('+', '')|replace(' ', '') if site_settings.whatsapp else '2348037474407' }}"
+    target="_blank"
+>
+    WhatsApp
+</a>
+
+
+<!-- ==========================
+     FOOTER
+=========================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+
+        <!-- BUSINESS -->
+
+        <div class="footer-box">
+
+            <h3>
+                {{ site_settings.business_name or "Chidinma Standard Ventures" }}
+            </h3>
+
+            <p>
+                {{ site_settings.description or
+                "Your trusted wholesale beverage supplier delivering quality products at competitive prices." }}
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+
+        <div class="footer-box">
+
+            <h3>Quick Links</h3>
+
+            <a href="/">Home</a>
+
+            <a href="/about">About</a>
+
+            <a href="/products">Products</a>
+
+            <a href="/gallery">Gallery</a>
+
+            <a href="/testimonials">Testimonials</a>
+
+            <a href="/contact">Contact</a>
+
+        </div>
+
+
+        <!-- CONTACT -->
+
+        <div class="footer-box">
+
+            <h3>Contact Information</h3>
+
+
+            {% if site_settings.address %}
+
+    <p>
+        📍
+        <a
+            href="https://www.google.com/maps/search/?api=1&query={{ site_settings.address|urlencode }}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            {{ site_settings.address }}
+        </a>
+    </p>
+
+{% else %}
+
+    <p>
+        📍
+        <a
+            href="https://www.google.com/maps/search/?api=1&query=No. 2 Mbanugo, by Emejulu Street, Onitsha"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            No. 2 Mbanugo, by Emejulu Street, Onitsha
+        </a>
+    </p>
+
+{% endif %}
+
+
+            {% if site_settings.customer_care %}
+
+    <p>
+        📞 Customer Care:
+
+        <a href="tel:{{ site_settings.customer_care }}">
+            {{ site_settings.customer_care }}
+        </a>
+    </p>
+
+{% else %}
+
+    <p>
+        📞 Customer Care:
+
+        <a href="tel:08166056650">
+            08166056650
+        </a>
+    </p>
+
+{% endif %}
+
+            {% if site_settings.whatsapp %}
+
+                <p>
+                    💬 WhatsApp:
+                    {{ site_settings.whatsapp }}
+                </p>
+
+            {% else %}
+
+                <p>
+                    💬 WhatsApp: +2348037474407
+                </p>
+
+            {% endif %}
+
+
+           {% if site_settings.email %}
+
+    <p>
+        📧 Email:
+
+        <a href="mailto:{{ site_settings.email }}">
+            {{ site_settings.email }}
+        </a>
+    </p>
+
+{% else %}
+
+    <p>
+        📧 Email:
+
+        <a href="mailto:chimaobim19@gmail.com">
+            chimaobim19@gmail.com
+        </a>
+    </p>
+
+{% endif %}
+
+           {% if site_settings.business_hours %}
+
+    <p>
+        🕒 Business Hours:
+        {{ site_settings.business_hours }}
+    </p>
+
+{% else %}
+
+    <p>
+        🕒 Business Hours:
+        Everyday • 8:00 AM – 8:00 PM
+    </p>
+
+{% endif %}
+
+        </div>
+
+    </div>
+
+<!-- SOCIAL MEDIA -->
+
+<div class="footer-box">
+
+    <h3>Follow Us</h3>
+
+    {% if site_settings.facebook %}
+        <a
+            href="{{ site_settings.facebook }}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Facebook
+        </a>
+    {% endif %}
+
+
+    {% if site_settings.instagram %}
+        <a
+            href="{{ site_settings.instagram }}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Instagram
+        </a>
+    {% endif %}
+
+
+    {% if site_settings.tiktok %}
+        <a
+            href="{{ site_settings.tiktok }}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            TikTok
+        </a>
+    {% endif %}
+
+
+    {% if site_settings.linkedin %}
+        <a
+            href="{{ site_settings.linkedin }}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            LinkedIn
+        </a>
+    {% endif %}
+
+</div>    
+
+
+    <hr>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026
+            {{ site_settings.business_name or "Chidinma Standard Ventures" }}.
+            All Rights Reserved.
+        </p>
+
+
+        <p class="designer">
+
+            Website Designed & Developed by
+
+            <span>
+                Onuoha Chimaobim Lionel
+            </span>
+
+        </p>
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | Chidinma Standard Ventures</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <h2>CSV</h2>
+
+            <p>Admin Panel</p>
+
+        </div>
+
+        <nav>
+
+            <a href="/admin/dashboard">📊 Dashboard</a>
+
+            <a href="/admin/products">📦 Products</a>
+
+            <a href="/admin/gallery">🖼 Gallery</a>
+
+            <a href="/admin/testimonials">⭐ Testimonials</a>
+
+            <a href="/admin/quotes">📩 Quote Requests</a>
+
+            <a href="/admin/settings">⚙ Website Settings</a>
+            
+            <a href="{{ url_for('main.admin_logout') }}">
+    🚪 Logout
+</a>
+            
+
+        </nav>
+
+    </aside>
+
+    <!-- Main -->
+
+    <main class="main-content">
+
+        <header class="top-header">
+
+            <h1>{% block page_title %}{% endblock %}</h1>
+
+        </header>
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+
+</body>
+
+</html>

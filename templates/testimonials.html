@@ -1,0 +1,240 @@
+```html
+{% extends "layout.html" %}
+
+{% block content %}
+
+<section class="page-banner">
+    <div class="container">
+        <h1>Testimonials</h1>
+        <p>
+            See what our customers have to say about Chidinma Standard Ventures.
+        </p>
+    </div>
+</section>
+
+
+<section class="testimonials-page">
+
+    <!-- INTRO -->
+    <div class="section-title">
+        <span class="section-eyebrow">CUSTOMER EXPERIENCES</span>
+
+        <h2>What Our Customers Say</h2>
+
+        <p>
+            We're proud to serve our customers with quality products
+            and dependable service.
+        </p>
+    </div>
+
+
+    <!-- APPROVED TESTIMONIALS -->
+
+    <div class="testimonials-grid">
+
+        {% if testimonials %}
+
+            {% for testimonial in testimonials %}
+
+                <article class="testimonial-card">
+
+                    <div class="testimonial-card-top">
+
+                        <div class="testimonial-avatar">
+                            {{ testimonial.customer_name[0]|upper }}
+                        </div>
+
+                        <div class="testimonial-customer">
+
+                            <h3>
+                                {{ testimonial.customer_name }}
+                            </h3>
+
+                            <span>
+                                Verified Customer
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="testimonial-rating">
+
+                        {% for i in range(testimonial.rating or 0) %}
+                            <span>★</span>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <p class="testimonial-message">
+                        “{{ testimonial.message }}”
+                    </p>
+
+
+                    <div class="testimonial-card-footer">
+                        <span>Customer Experience</span>
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="testimonial-empty">
+
+                <div class="empty-icon">
+                    ★
+                </div>
+
+                <h3>No testimonials yet</h3>
+
+                <p>
+                    Be the first customer to share your experience with us.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- SHARE EXPERIENCE -->
+
+    <section class="testimonial-form-section">
+
+        <div class="testimonial-form-header">
+
+            <span class="section-eyebrow">
+                YOUR EXPERIENCE MATTERS
+            </span>
+
+            <h2>Share Your Experience</h2>
+
+            <p>
+                We'd love to hear about your experience with
+                Chidinma Standard Ventures.
+            </p>
+
+        </div>
+
+
+        <div class="testimonial-form-wrapper">
+
+            <form
+                action="{{ url_for('main.testimonials') }}"
+                method="POST"
+                class="testimonial-form"
+            >
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="customer_name">
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="customer_name"
+                            name="customer_name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="rating">
+                            Your Rating
+                        </label>
+
+                        <select
+                            id="rating"
+                            name="rating"
+                            required
+                        >
+
+                            <option value="">
+                                Select your rating
+                            </option>
+
+                            <option value="5">
+                                ⭐⭐⭐⭐⭐ — Excellent
+                            </option>
+
+                            <option value="4">
+                                ⭐⭐⭐⭐ — Very Good
+                            </option>
+
+                            <option value="3">
+                                ⭐⭐⭐ — Good
+                            </option>
+
+                            <option value="2">
+                                ⭐⭐ — Fair
+                            </option>
+
+                            <option value="1">
+                                ⭐ — Poor
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="message">
+                        Your Testimonial
+                    </label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="6"
+                        maxlength="500"
+                        placeholder="Tell us about your experience..."
+                        required
+                    ></textarea>
+
+                    <small>
+                        Please keep your testimonial respectful and genuine.
+                    </small>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="testimonial-submit-btn"
+                >
+                    Submit Testimonial
+                    <span>→</span>
+                </button>
+
+
+                <p class="testimonial-note">
+                    Your testimonial will be reviewed by our team before
+                    appearing publicly on the website.
+                </p>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</section>
+
+{% endblock %}
+```

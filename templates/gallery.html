@@ -1,0 +1,157 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<section class="page-banner">
+
+    <div class="container">
+
+        <h1>Gallery</h1>
+
+        <p>
+            Take a look at our products, deliveries and business activities.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="gallery-page">
+
+    <div class="section-title">
+
+        <h2>Our Gallery</h2>
+
+        <p>
+            A look at our products, deliveries and business activities.
+        </p>
+
+    </div>
+
+
+    <div class="gallery-grid">
+
+        {% if gallery_images %}
+
+            {% for item in gallery_images %}
+
+                <div class="gallery-item">
+
+                    <img
+                        src="{{ url_for('static', filename='uploads/' + item.image) }}"
+                        alt="{{ item.title or 'Chidinma Standard Ventures Gallery' }}"
+                        onclick="openLightbox(
+                            '{{ url_for('static', filename='uploads/' + item.image) }}',
+                            '{{ item.title or 'Gallery image' }}'
+                        )"
+                    >
+
+                    {% if item.title %}
+
+                        <div class="gallery-caption">
+
+                            <h3>{{ item.title }}</h3>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="gallery-empty">
+
+                <p>No gallery images available yet.</p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- ==========================
+     GALLERY LIGHTBOX
+========================== -->
+
+<div id="galleryLightbox" class="gallery-lightbox">
+
+    <button
+        class="lightbox-close"
+        onclick="closeLightbox()"
+        aria-label="Close"
+    >
+        &times;
+    </button>
+
+
+    <img
+        id="lightboxImage"
+        src=""
+        alt=""
+    >
+
+</div>
+
+
+<script>
+
+function openLightbox(imageSrc, imageAlt) {
+
+    const lightbox =
+        document.getElementById("galleryLightbox");
+
+    const image =
+        document.getElementById("lightboxImage");
+
+
+    image.src = imageSrc;
+
+    image.alt = imageAlt;
+
+
+    lightbox.style.display = "flex";
+
+}
+
+
+function closeLightbox() {
+
+    document.getElementById("galleryLightbox").style.display = "none";
+
+}
+
+
+document
+    .getElementById("galleryLightbox")
+    .addEventListener("click", function(event) {
+
+        if (event.target === this) {
+
+            closeLightbox();
+
+        }
+
+    });
+
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
+
+        closeLightbox();
+
+    }
+
+});
+
+</script>
+
+{% endblock %}
+```

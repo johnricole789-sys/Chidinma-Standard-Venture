@@ -1,0 +1,206 @@
+{% extends "admin/layout.html" %}
+
+{% block page_title %}
+Gallery
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-page">
+
+    <div class="admin-page-header">
+
+        <div>
+            <h1>Gallery</h1>
+            <p>Manage images displayed on your website.</p>
+        </div>
+
+        <button class="admin-btn" onclick="openGalleryModal()">
+            + Add Image
+        </button>
+
+    </div>
+
+
+    <!-- GALLERY -->
+
+    <div class="admin-card">
+
+        <div class="admin-card-header">
+
+            <h2>Gallery Images</h2>
+
+        </div>
+
+
+        <div class="gallery-admin-grid">
+
+            {% if gallery %}
+
+                {% for item in gallery %}
+
+                <div class="gallery-admin-item">
+
+                    <img
+                        src="{{ url_for('static', filename='uploads/' + item.image) }}"
+                        alt="{{ item.title or 'Gallery image' }}"
+                    >
+
+                    <div class="gallery-admin-info">
+
+                        <h3>
+                            {{ item.title or "Untitled Image" }}
+                        </h3>
+
+                        <form
+                            action="{{ url_for('main.delete_gallery', gallery_id=item.id) }}"
+                            method="POST"
+                            onsubmit="return confirm('Delete this image?');"
+                        >
+
+                            <button
+                                type="submit"
+                                class="delete-btn"
+                            >
+                                Delete
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="gallery-empty">
+
+                    <p>No gallery images added yet.</p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================
+     ADD GALLERY IMAGE MODAL
+========================== -->
+
+<div id="galleryModal" class="admin-modal">
+
+    <div class="admin-modal-content">
+
+        <div class="modal-header">
+
+            <h2>Add Gallery Image</h2>
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="closeGalleryModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form
+            action="{{ url_for('main.add_gallery') }}"
+            method="POST"
+            enctype="multipart/form-data"
+            class="product-form"
+        >
+
+            <div class="form-group">
+
+                <label>Image Title</label>
+
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="e.g. Our Beverage Collection"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Gallery Image</label>
+
+                <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    required
+                >
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closeGalleryModal()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="admin-btn"
+                >
+                    Upload Image
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function openGalleryModal() {
+
+    document.getElementById("galleryModal").style.display = "flex";
+
+}
+
+
+function closeGalleryModal() {
+
+    document.getElementById("galleryModal").style.display = "none";
+
+}
+
+
+window.onclick = function(event) {
+
+    const modal = document.getElementById("galleryModal");
+
+    if (event.target === modal) {
+
+        modal.style.display = "none";
+
+    }
+
+}
+
+</script>
+
+{% endblock %}

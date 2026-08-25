@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<section class="page-banner">
+    <div class="container">
+        <h1>Our Products</h1>
+        <p>Quality beverages available at wholesale and retail prices.</p>
+    </div>
+</section>
+
+<section class="products-page">
+
+    <div class="section-title">
+        <h2>Our Products</h2>
+        <p>Browse the beverages we currently supply.</p>
+    </div>
+
+    <div class="product-grid">
+
+        {% if products %}
+
+            {% for product in products %}
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    {% if product.image %}
+
+                        <img
+                            src="{{ url_for('static', filename='uploads/' + product.image) }}"
+                            alt="{{ product.name }}"
+                        >
+
+                    {% else %}
+
+                        <div class="placeholder-image">
+                            Product Image
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="product-info">
+
+                    <h3>{{ product.name }}</h3>
+
+                    {% if product.description %}
+                        <p>{{ product.description }}</p>
+                    {% endif %}
+
+                    <h4>₦{{ "{:,.2f}".format(product.price) }}</h4>
+
+                    <a
+                        href="https://wa.me/23435977531?text=Hello%20Chidinma%20Standard%20Ventures,%20I%20would%20like%20to%20order%20{{ product.name|urlencode }}."
+                        class="order-btn"
+                        target="_blank"
+                    >
+                        Order on WhatsApp
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p class="no-products">
+                No products are currently available.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

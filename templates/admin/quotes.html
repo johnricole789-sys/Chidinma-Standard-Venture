@@ -1,0 +1,267 @@
+{% extends "admin/layout.html" %}
+
+{% block content %}
+
+<div class="admin-page">
+
+    <div class="page-header">
+
+        <div>
+            <h1>Quote Requests</h1>
+
+            <p>
+                View and manage wholesale quote requests from customers.
+            </p>
+        </div>
+
+        <div class="header-count">
+            {{ quotes|length }}
+            Request{% if quotes|length != 1 %}s{% endif %}
+        </div>
+
+    </div>
+
+
+    {% if quotes %}
+
+        <div class="quotes-grid">
+
+            {% for quote in quotes %}
+
+                <div class="quote-card">
+
+                    <!-- HEADER -->
+
+                    <div class="quote-card-header">
+
+                        <div>
+
+                            <h2>
+                                {{ quote.full_name }}
+                            </h2>
+
+                            <span
+                                class="quote-status {{ quote.status|lower|replace(' ', '-') }}"
+                            >
+                                {{ quote.status }}
+                            </span>
+
+                        </div>
+
+                        <span class="quote-date">
+                            {{ quote.created_at.strftime("%d %b %Y, %I:%M %p") }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- CUSTOMER DETAILS -->
+
+                    <div class="quote-details">
+
+                        <div class="quote-detail">
+
+                            <strong>📞 Phone</strong>
+
+                            <a href="tel:{{ quote.phone }}">
+                                {{ quote.phone }}
+                            </a>
+
+                        </div>
+
+
+                        {% if quote.email %}
+
+                            <div class="quote-detail">
+
+                                <strong>📧 Email</strong>
+
+                                <a href="mailto:{{ quote.email }}">
+                                    {{ quote.email }}
+                                </a>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if quote.business_name %}
+
+                            <div class="quote-detail">
+
+                                <strong>🏢 Business</strong>
+
+                                <span>
+                                    {{ quote.business_name }}
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+
+                    <div class="quote-message">
+
+                        <strong>
+                            Customer Request
+                        </strong>
+
+                        <p>
+                            {{ quote.message }}
+                        </p>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="quote-status-section">
+
+                        <strong>
+                            Request Status
+                        </strong>
+
+                        <form
+                            action="{{ url_for('main.update_quote_status', quote_id=quote.id) }}"
+                            method="POST"
+                            class="status-form"
+                        >
+
+                            <select
+                                name="status"
+                                class="status-select"
+                            >
+
+                                <option
+                                    value="Pending"
+                                    {% if quote.status == "Pending" %}selected{% endif %}
+                                >
+                                    🟡 Pending
+                                </option>
+
+
+                                <option
+                                    value="Contacted"
+                                    {% if quote.status == "Contacted" %}selected{% endif %}
+                                >
+                                    🔵 Contacted
+                                </option>
+
+
+                                <option
+                                    value="Completed"
+                                    {% if quote.status == "Completed" %}selected{% endif %}
+                                >
+                                    🟢 Completed
+                                </option>
+
+
+                                <option
+                                    value="Cancelled"
+                                    {% if quote.status == "Cancelled" %}selected{% endif %}
+                                >
+                                    🔴 Cancelled
+                                </option>
+
+                            </select>
+
+
+                            <button
+                                type="submit"
+                                class="admin-btn"
+                            >
+                                Update Status
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="quote-actions">
+
+                        <a
+                            href="https://wa.me/{{ quote.phone|replace('+', '')|replace(' ', '')|replace('-', '') }}"
+                            target="_blank"
+                            class="admin-btn"
+                        >
+                            💬 WhatsApp Customer
+                        </a>
+
+
+                        <a
+                            href="tel:{{ quote.phone }}"
+                            class="admin-btn"
+                        >
+                            📞 Call
+                        </a>
+
+
+                        {% if quote.email %}
+
+                            <a
+                                href="mailto:{{ quote.email }}"
+                                class="admin-btn"
+                            >
+                                📧 Email
+                            </a>
+
+                        {% endif %}
+
+
+                        <form
+                            action="{{ url_for('main.delete_quote', quote_id=quote.id) }}"
+                            method="POST"
+                        >
+
+                            <button
+                                type="submit"
+                                class="delete-btn"
+                                onclick="return confirm('Delete this quote request?')"
+                            >
+                                🗑 Delete
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+        <!-- EMPTY STATE -->
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                📋
+            </div>
+
+            <h2>
+                No Quote Requests Yet
+            </h2>
+
+            <p>
+                Customer wholesale quote requests will appear here
+                when they submit the form on the website.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
