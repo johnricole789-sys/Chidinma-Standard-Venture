@@ -1,7 +1,7 @@
 import os
 
 class Config:
-    SECRET_KEY = "CSV2026_Professional_Website"
+    SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
 
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
